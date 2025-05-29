@@ -19,7 +19,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+        overflow: scroll;
         position: relative;
       }
 
@@ -43,23 +43,6 @@
         animation: float 20s infinite linear;
       }
 
-      @keyframes float {
-        0% {
-          transform: translateY(100vh) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        90% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-100px) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
       /* Login Container */
       .login-container {
         background: rgba(255, 255, 255, 0.08);
@@ -76,11 +59,23 @@
         animation: slideIn 0.8s ease-out forwards;
       }
 
-      @keyframes slideIn {
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+      /* PSEUDOELEMENT: Decorated with ::before */
+      .login-container::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #2196f3, #a2d8ff, #2196f3);
+        border-radius: 26px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .login-container:hover::before {
+        opacity: 0.3;
       }
 
       .login-header {
@@ -101,15 +96,21 @@
         color: white;
         font-weight: bold;
         animation: pulse 2s ease-in-out infinite alternate;
+        position: relative;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        100% {
-          transform: scale(1.05);
-        }
+      /* PSEUDOELEMENT: Bright effect with ::after */
+      .logo::after {
+        content: '';
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 30%;
+        height: 30%;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: rotate(45deg);
+        animation: shine 3s ease-in-out infinite;
       }
 
       .login-title {
@@ -118,6 +119,20 @@
         font-weight: 700;
         margin-bottom: 0.5rem;
         letter-spacing: -0.5px;
+        position: relative;
+      }
+
+      /* PSEUDOELEMENT: underlined decorative item */
+      .login-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #2196f3, transparent);
+        border-radius: 2px;
       }
 
       .login-subtitle {
@@ -157,82 +172,33 @@
         box-shadow: 0 10px 25px rgba(107, 188, 255, 0.2);
       }
 
-      .form-input.error {
-        border-color: #2196f3;
-        animation: shake 0.5s ease-in-out;
+      /* PSEUDOELEMENT: Input icons */
+      .form-input[type="email"] {
+        padding-left: 50px;
       }
 
-      .form-input.success {
-        border-color: #2ed573;
-      }
-
-      @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        25% {
-          transform: translateX(-5px);
-        }
-        75% {
-          transform: translateX(5px);
-        }
-      }
-
-      /* Validation Messages */
-      .validation-message {
+      .form-group:first-of-type::before {
+        content: '@';
         position: absolute;
-        top: 100%;
-        left: 0;
-        font-size: 14px;
-        margin-top: 8px;
-        padding: 8px 16px;
-        border-radius: 8px;
-        backdrop-filter: blur(10px);
-        transform: translateY(-10px);
-        opacity: 0;
-        transition: all 0.3s ease;
-        pointer-events: none;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 18px;
+        z-index: 5;
       }
 
-      .validation-message.show {
-        transform: translateY(0);
-        opacity: 1;
+      .form-input[type="password"] {
+        padding-left: 50px;
       }
 
-      .validation-message.error {
-        background: rgba(255, 71, 87, 0.15);
-        border: 1px solid rgba(255, 71, 87, 0.3);
-        color: #cf0f0f;
-        z-index: 2;
-      }
-
-      .validation-message.success {
-        background: rgba(46, 213, 115, 0.15);
-        border: 1px solid rgba(46, 213, 115, 0.3);
-        color: #2ed573;
-      }
-
-      /* Password Strength Indicator */
-      .password-strength {
-        margin-top: 12px;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        overflow: hidden;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .password-strength.show {
-        opacity: 1;
-      }
-
-      .strength-bar {
-        height: 100%;
-        width: 0%;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 2px;
+      .form-group:nth-of-type(2)::before {
+        content: '🔑';
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
       }
 
       /* Login Button */
@@ -292,12 +258,6 @@
         opacity: 1;
       }
 
-      @keyframes spin {
-        to {
-          transform: translate(-50%, -50%) rotate(360deg);
-        }
-      }
-
       /* Additional Options */
       .login-options {
         display: flex;
@@ -333,6 +293,82 @@
       .forgot-password:hover {
         color: #2196f3;
         text-shadow: 0 0 8px rgba(107, 176, 255, 0.5);
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: 12px;
+        color: white;
+        font-weight: 500;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        transform: translateX(400px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        border-left: 4px solid;
+        min-width: 300px;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .notification.error {
+        background: rgba(255, 0, 21, 0.2);
+        border-left-color: #ff4757;
+      }
+
+      .notification.success {
+        background: rgba(46, 213, 115, 0.2);
+        border-left-color: #2ed573;
+      }
+
+      .notification.warning {
+        background: rgba(255, 166, 0, 0.2);
+        border-left-color: #ffa500;
+      }
+
+      /* PSEUDOELEMENT: Notification icon */
+      .notification::before {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+
+      .notification.error::before {
+        content: '❌';
+        background: #ffccd0;
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+      }
+
+      .notification.success::before {
+        content: '✅';
+        background: #c7ffde;
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+      }
+
+      .notification.warning::before {
+        content: '⚠️';
+        background: #ffecc8;
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
       }
 
       /* Success Modal */
@@ -386,6 +422,52 @@
         animation: successPulse 1s ease-out;
       }
 
+      /* Animations */
+
+      @keyframes slideIn {
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes shine {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.8; }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
       @keyframes successPulse {
         0% {
           transform: scale(0);
@@ -407,6 +489,12 @@
 
         .login-title {
           font-size: 24px;
+        }
+
+        .notification {
+          right: 10px;
+          left: 10px;
+          min-width: auto;
         }
       }
     </style>
@@ -432,9 +520,7 @@
             placeholder="Email address"
             required
           />
-          <div class="validation-message" id="emailValidation"></div>
         </div>
-
         <div class="form-group">
           <input
             type="password"
@@ -443,10 +529,6 @@
             placeholder="Password"
             required
           />
-          <div class="validation-message" id="passwordValidation"></div>
-          <div class="password-strength" id="passwordStrength">
-            <div class="strength-bar" id="strengthBar"></div>
-          </div>
         </div>
 
         <div class="login-options">
@@ -477,7 +559,7 @@
       // Particles
       function createParticles() {
         const particlesContainer = document.getElementById("particles");
-        const particleCount = 250;
+        const particleCount = 150; // Reducido de 250
 
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement("div");
@@ -489,33 +571,77 @@
         }
       }
 
+      // Notification System
+      function showNotification(message, type = 'error') {
+        // Remove existent notification
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        // New notification
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Show it with animation
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 100);
+
+        // Hide it after 4 seconds
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            notification.remove();
+          }, 400);
+        }, 4000);
+      }
+
       const login = () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const buttonLoader = document.getElementById("buttonLoader");
+        const loginButton = document.getElementById("loginButton");
         const successModal = document.getElementById("successModal");
 
-        const validEmail = "santiagor.acarlos@gmail.com";
+        const validEmail = "johndoe@gmail.com";
         const validPassword = "12345";
 
-        buttonLoader.style.opacity = 1;
-
+        // Validation with notifications
         if (!email || !password) {
-          alert("Por favor ingrese ambos valores");
+          showNotification("Por favor ingrese ambos valores", "warning");
           return;
-        } else if (email != validEmail || password != validPassword) {
-          alert("Error ingrese credenciales validas");
+        }
+
+        if (!email.includes('@')) {
+          showNotification("Por favor ingrese un email válido", "error");
           return;
-        } else {
+        }
+
+        // Show loading
+        loginButton.classList.add('loading');
+
+        setTimeout(() => {
+          if (email !== validEmail || password !== validPassword) {
+            loginButton.classList.remove('loading');
+            showNotification("Incorrect credentials. Try again", "error");
+            return;
+          }
+
+          // Successful Login 
+          loginButton.classList.remove('loading');
+          showNotification("Welcome! Redirecting...", "success");
+          
           setTimeout(() => {
-            successModal.style.visibility = "visible";
-            successModal.style.opacity = 1;
-          }, 1000);
+            successModal.classList.add('show');
+          }, 850);
 
           setTimeout(() => {
             window.location.href = "https://tonys-dev.github.io/my-portfolio/";
-          }, 2450);
-        }
+          }, 3000);
+        }, 1000);
       };
 
       // Initialize Application
@@ -523,25 +649,14 @@
         createParticles();
       });
 
-      // Add dynamic CSS animations
-      const style = document.createElement("style");
-      style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-        `;
-      document.head.appendChild(style);
-
       const loginButton = document.getElementById("loginButton");
-      loginButton.addEventListener("click", () => {
-        login();
+      loginButton.addEventListener("click", login);
+
+      // Enter key support
+      document.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          login();
+        }
       });
     </script>
   </body>
