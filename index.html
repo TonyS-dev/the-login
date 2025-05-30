@@ -3,59 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login - By Antonio Santiago</title>
+    <meta
+      name="description"
+      content="Secure login portal for user authentication"
+    />
     <link rel="stylesheet" href="./assets/styles/styles.css" />
   </head>
   <body>
-    <!-- Animated Background Particles -->
+    <!-- Decorative background particles -->
     <div class="particles" id="particles"></div>
 
-    <!-- Login Container -->
-    <div class="login-container">
-      <div class="login-header">
+    <!-- Main login content -->
+    <main id="main">
+      <header class="login-header">
         <div class="logo">AS</div>
         <h1 class="login-title">Welcome Back</h1>
         <p class="login-subtitle">Please sign in to your account</p>
-      </div>
+      </header>
 
-      <form id="loginForm">
-        <div class="form-group">
-          <input
-            type="email"
-            id="email"
-            class="form-input"
-            placeholder="Email address"
-            required
-          />
-        </div>
+      <form id="loginForm" novalidate>
+        <fieldset>
+          <legend class="hidden">User Credentials</legend>
 
-        <div class="form-group">
-          <input
-            type="password"
-            id="password"
-            class="form-input"
-            placeholder="Password"
-            required
-          />
-        </div>
+          <div class="form-group">
+            <label for="email" class="hidden">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="Email address"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="hidden">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              placeholder="Password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+        </fieldset>
 
         <div class="login-options">
           <label class="remember-me">
-            <input type="checkbox" id="rememberMe" />
+            <input type="checkbox" id="rememberMe" name="remember" />
             <span class="checkmark"></span>
             Remember me
+            <span id="remember-description" class="hidden">
+              Keep me signed in on this device
+            </span>
           </label>
-          <a href="#" class="forgot-password">Forgot password?</a>
+          <a href="#" class="forgot-password"> Forgot password? </a>
         </div>
 
         <div class="button-container">
-          <button type="button" class="login-button" id="loginButton">
+          <button type="submit" class="login-button" id="loginButton">
             <span class="button-text">Sign In</span>
           </button>
           <div id="buttonLoader" class="button-loader"></div>
         </div>
       </form>
-    </div>
+    </main>
 
     <!-- Success Modal -->
     <div class="success-modal" id="successModal">
@@ -65,6 +82,9 @@
         <p>Welcome to your dashboard</p>
       </div>
     </div>
+    <footer>
+      <p>&copy; 2025 Login by Antonio Santiago. All rights reserved.</p>
+    </footer>
     <script src="./src/main.js"></script>
   </body>
 </html>

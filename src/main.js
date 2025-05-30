@@ -1,6 +1,8 @@
 // Variables
 const rmCheck = document.getElementById("rememberMe");
 const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("loginButton");
 const buttonLoader = document.getElementById("buttonLoader");
 const successModal = document.getElementById("successModal");
@@ -67,10 +69,12 @@ function showNotification(message, type = "error") {
 }
 
 // Login function
-const login = () => {
+const login = (event) => {
+  event.preventDefault();
+
   const email = emailInput.value;
-  const password = document.getElementById("password").value;
-  const validEmail = "user@gmail.com";
+  const password = passwordInput.value;
+  const validEmail = "user@mail.com";
   const validPassword = "12345";
 
   // Validation with notifications
@@ -81,6 +85,7 @@ const login = () => {
 
   if (!email.includes("@")) {
     showNotification("Please enter a valid email", "error");
+    emailInput.focus();
     return;
   }
 
@@ -124,14 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Event listeners
-loginButton.addEventListener("click", login);
-
-// Enter key support
-document.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    login();
-  }
-});
+loginForm.addEventListener("submit", login);
 
 // Remember me checkbox change
 rmCheck.addEventListener("change", lsRememberMe);
